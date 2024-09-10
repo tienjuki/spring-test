@@ -1,0 +1,41 @@
+<!-- employee-form.html -->
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+	<title>Employee Form</title>
+	<link rel="stylesheet" href="/css/form.css" />
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<h1 th:if="${employee.employee_id == null}">Create employee</h1>
+		<form th:action="@{/employees/create}" th:object="${employee}" method="post">
+
+			<div>
+				<label for="first_name">first_name:</label>
+				<input type="text" id="first_name" th:field="*{first_name}" required="true" />
+				<span th:errors="*{first_name}" class="error"></span>
+			</div>
+			<div>
+				<label for="last_name">last_name:</label>
+				<input type="text" id="last_name" th:field="*{last_name}" required="true" />
+				<span th:errors="*{last_name}" class="error"></span>
+			</div>
+			<div>
+				<label for="email">Email:</label>
+				<input type="text" id="email" th:field="*{email}" required="true" />
+				<span th:errors="*{email}" class="error"></span>
+			</div>
+			<div>
+				<label for="job">Job:</label>
+				<input type="text" id="job" th:field="*{job_id}" required="true" />
+				<span th:errors="*{job_id}" class="error"></span>
+			</div>
+			<button type="submit">Save</button>
+		</form>
+	</div>
+
+</body>
+
+</html>

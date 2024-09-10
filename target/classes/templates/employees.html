@@ -1,0 +1,73 @@
+<!-- products.html -->
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+	<title>Employees</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<h1>Employees</h1>
+
+		<a th:href="@{/employees/create}" class="create-button">Create New Employees</a>
+
+		<table>
+			<thead>
+				<tr>
+					<th><a
+							th:href="@{/employees(sortField='id', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage})}">ID</a>
+					</th>
+					<th><a
+							th:href="@{/employees(sortField='first_name', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage})}">first_name</a>
+					</th>
+					<th><a
+							th:href="@{/employees(sortField='last_name', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage})}">last_name</a>
+					</th>
+					<th><a
+							th:href="@{/employees(sortField='email', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage})}">Email</a>
+					</th>
+					<th><a
+							th:href="@{/employees(sortField='job_id', sortDir=${sortDir == 'asc' ? 'desc' : 'asc'}, page=${currentPage})}">job_id</a>
+					</th>
+					
+					<th>projects</th>
+					<th>action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="employee : ${employees}">
+					<td th:text="${employee.employee_id}"></td>
+					<td th:text="${employee.first_name}"></td>
+					<td th:text="${employee.last_name}"></td>
+					<td th:text="${employee.email}"></td>
+					<td th:text="${employee.job_id}"></td>
+					<td>
+						<ul>
+							<li th:each="project : ${employee.projects}" th:text="${project.name}"></li>
+						</ul>
+					</td>
+					<td>
+						<a th:href="@{/employees/{id}/edit(id=${employee.employee_id})}">Edit</a>
+						<a th:href="@{/employees/{id}/delete(id=${employee.employee_id})}">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div>
+		<span th:if="${currentPage > 0}">
+			<a th:href="@{/employees(page=${currentPage - 1}, sortField=${sortField}, sortDir=${sortDir})}">Previous</a>
+		</span>
+		<span th:if="${totalPages - 1 > currentPage}">
+			<a th:href="@{/employees(page=${currentPage + 1}, sortField=${sortField}, sortDir=${sortDir})}">Next</a>
+		</span>
+	</div>
+
+	<div>
+		Page: <span th:text="${currentPage + 1}"></span> / <span th:text="${totalPages}"></span>
+	</div>
+</body>
+
+</html>

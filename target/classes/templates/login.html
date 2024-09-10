@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Login</title>
+	<style>
+		/* Reset some default styles */
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		/* Global styles */
+		body {
+			font-family: Arial, sans-serif;
+			line-height: 1.6;
+			color: #333;
+			background-color: #f4f4f4;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+
+		.container {
+			max-width: 400px;
+			width: 100%;
+			background-color: #fff;
+			padding: 2rem;
+			border-radius: 8px;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		h1 {
+			text-align: center;
+			margin-bottom: 1.5rem;
+		}
+
+		.form-group {
+			margin-bottom: 1.5rem;
+		}
+
+		label {
+			display: block;
+			font-weight: bold;
+			margin-bottom: 0.5rem;
+		}
+
+		input {
+			width: 100%;
+			padding: 0.8rem;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			font-size: 1rem;
+		}
+
+		button {
+			display: block;
+			width: 100%;
+			padding: 0.8rem;
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			font-size: 1rem;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		button:hover {
+			background-color: #45a049;
+		}
+
+		.register a {
+			color: #9C5F38;
+			text-decoration: none;
+		}
+
+		.forgot-password,
+		.register {
+			text-align: right;
+			margin-top: 0.5rem;
+		}
+
+		.forgot-password a {
+			color: #4CAF50;
+			text-decoration: none;
+		}
+
+		.forgot-password a:hover,
+		.register a:hover {
+			text-decoration: underline;
+		}
+
+		/* Media queries for responsiveness */
+		@media (max-width: 480px) {
+			.container {
+				padding: 1.5rem;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Login</h1>
+		<form method="POST" th:action="@{/login}">
+			<div class="form-group">
+				<label for="username">Username</label>
+				<input type="text" id="username" name="username" required="true" />
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password" required="true" />
+				<span>
+					<strong style="color: #e3342f; font-size: 80%;"
+						th:if="${param.error}">ユーザー名またはパスワードが正しくありません。</strong>
+				</span>
+			</div>
+			<button type="submit">Log In</button>
+			<div class="forgot-password">
+				<a href="#">Forgot Password?</a>
+			</div>
+		</form>
+		<div class="register">
+			<a th:href="@{/register}">Register</a>
+		</div>
+
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Project Form</title>
+	<link rel="stylesheet" href="/css/form.css" />
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<h1 th:if="${project.id == null}">Create New Project</h1>
+		<h1 th:if="${project.id != null}">Edit Project</h1>
+		<div th:if="${success}" class="success" th:text="${success}"></div>
+		<form th:action="@{/projects/{id}/edit(id=${project.id})}" th:object="${project}" method="post"
+			th:if="${project.id != null}">
+			<input type="hidden" th:field="*{id}" />
+			<div>
+				<label for="name">Name:</label>
+				<input type="text" id="name" th:field="*{name}" required="true" />
+				<span th:errors="*{name}" class="error"></span>
+			</div>
+			<div>
+				<label for="description">Description:</label>
+				<input type="text" id="description" th:field="*{description}" required="true" />
+				<span th:errors="*{description}" class="error"></span>
+			</div>
+			<button type="submit">Save</button>
+		</form>
+		<form th:action="@{/projects/create}" th:object="${project}" method="post" th:if="${project.id == null}">
+			<div>
+				<label for="name">Name:</label>
+				<input type="text" id="name" th:field="*{name}" required="true" />
+				<span th:errors="*{name}" class="error"></span>
+			</div>
+			<div>
+				<label for="description">Description:</label>
+				<input type="text" id="description" th:field="*{description}" required="true" />
+				<span th:errors="*{description}" class="error"></span>
+			</div>
+			<button type="submit">Create</button>
+		</form>
+	</div>
+</body>
+
+</html>

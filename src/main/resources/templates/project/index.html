@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Projects</title>
+	<link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<h1>Projects</h1>
+		<a th:href="@{/projects/create}" class="create-button">Create New Project</a>
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="project : ${projects}">
+					<td th:text="${project.id}"></td>
+					<td th:text="${project.name}"></td>
+					<td th:text="${project.description}"></td>
+					<td>
+						<a th:href="@{/projects/{id}/edit(id=${project.id})}">Edit</a>
+						<form th:action="@{/projects/{id}/delete(id=${project.id})}" method="post">
+							<button type="submit">Delete</button>
+						</form>
+						<button type="button" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#assignEmployeeModal-' + ${project.id}">
+							Assign Employee
+						</button>
+						<!-- Modal -->
+						<div class="modal fade" th:id="'assignEmployeeModal-' + ${project.id}" tabindex="-1"
+							aria-labelledby="assignEmployeeModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="assignEmployeeModalLabel"
+											th:text="'Assign Employee to ' + ${project.name}"></h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<form th:action="@{/projects/{id}/assign-employee(id=${project.id})}"
+											method="post">
+											<div class="form-group">
+												<label for="employeeId">Select Employee:</label>
+												<select class="form-control" id="employeeId" name="employeeId"
+													required="true">
+													<option value="">Choose an employee</option>
+													<option th:each="employee : ${employees}"
+														th:value="${employee.employee_id}" th:text="${employee.email}">
+													</option>
+												</select>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-bs-dismiss="modal">Close</button>
+												<button type="submit" class="btn btn-primary">Assign</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>
